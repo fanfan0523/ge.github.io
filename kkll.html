@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择题游戏</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #87CEEB;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        #warning {
+            display: none;
+            font-size: 30px;
+            color: red;
+            text-align: center;
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translate(0); }
+            25% { transform: translate(-10px); }
+            50% { transform: translate(10px); }
+            75% { transform: translate(-10px); }
+            100% { transform: translate(0); }
+        }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: red;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        #message {
+            display: none;
+            text-align: center;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="question">娇娇爱帆帆嘛？</div>
+    <button class="btn" id="love-btn">爱</button>
+    <button class="btn" id="not-love-btn">不爱</button>
+    <div id="warning">⚠️ 错误选择！请重新选择！ ⚠️</div>
+    <div id="message">娇娇大王对不起嘛，这几天是帆帆不对</div>
+
+    <script>
+        const loveBtn = document.getElementById('love-btn');
+        const notLoveBtn = document.getElementById('not-love-btn');
+        const warning = document.getElementById('warning');
+        const message = document.getElementById('message');
+        const question = document.getElementById('question');
+
+        loveBtn.onclick = function() {
+            question.style.display = 'none';
+            createHearts();
+            message.style.display = 'block';
+            document.body.removeChild(loveBtn);
+            document.body.removeChild(notLoveBtn);
+        };
+
+        notLoveBtn.onclick = function() {
+            warning.style.display = 'block';
+            setTimeout(() => {
+                warning.style.display = 'none';
+            }, 2000);
+        };
+
+        function createHearts() {
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerText = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                document.body.appendChild(heart);
+
+                // 随机移动
+                setInterval(() => {
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
